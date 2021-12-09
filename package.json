@@ -2,25 +2,36 @@
   "name": "intercheck-extension",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build": "INLINE_RUNTIME_CHUNK=false craco build",
+    "test": "craco test",
+    "eject": "craco eject",
+    "cp": "rm -rf /mnt/c/Users/user/Desktop/extension && cp -R build /mnt/c/Users/user/Desktop/extension",
+    "postbuild": "yarn cp"
+  },
   "dependencies": {
+    "@chakra-ui/react": "^1.7.2",
+    "@craco/craco": "^6.4.3",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "framer-motion": "^4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.0.1"
+  },
+  "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/chrome": "^0.0.168",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "typescript": "^4.1.2",
-    "web-vitals": "^1.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "craco-alias": "^3.0.1",
+    "typescript": "^4.1.2"
   },
   "eslintConfig": {
     "extends": [
