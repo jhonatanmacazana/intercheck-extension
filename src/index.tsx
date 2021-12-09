@@ -2,9 +2,9 @@ import { ColorModeScript, ChakraProvider } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import theme from "./theme";
+import App from "#root/App";
+import reportWebVitals from "#root/reportWebVitals";
+import theme from "#root/theme";
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>

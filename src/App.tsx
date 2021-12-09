@@ -1,9 +1,15 @@
 import { Box, Heading, Stack } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 
+import { MAX_NUMBER_OF_MEASUREMENTS, PING_INTERVAL_IN_MS } from "#root/lib/constants";
 import ping from "#root/lib/ping";
 
-const MAX_NUMBER_OF_MEASUREMENTS = 10;
+type Stat = {
+  timeWithoutConectivity: any;
+  lastInternetCut: number;
+  speedTest: any;
+  latencyStatistics: number;
+};
 
 const App = () => {
   const [measurements, setMeasurements] = useState<number[]>([]);
@@ -21,7 +27,7 @@ const App = () => {
 
   useEffect(() => {
     getStats();
-    const timeRef = setInterval(() => getStats(), 1000);
+    const timeRef = setInterval(() => getStats(), PING_INTERVAL_IN_MS);
     return () => clearInterval(timeRef);
   }, [getStats]);
 

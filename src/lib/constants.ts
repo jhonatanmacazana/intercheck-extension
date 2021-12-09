@@ -1,0 +1,2 @@
+export const MAX_NUMBER_OF_MEASUREMENTS = 10;
+export const PING_INTERVAL_IN_MS = 1000;
