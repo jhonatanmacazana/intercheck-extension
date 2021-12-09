@@ -1,69 +1,47 @@
-import "./App.css";
-import { useEffect, useState } from "react";
+import { Box, Heading, Stack } from "@chakra-ui/react";
+import { useCallback, useEffect, useState } from "react";
 
-import { DOMMessage, DOMMessageResponse } from "./types";
+import ping from "#root/lib/ping";
 
-function App() {
-  const [title, setTitle] = useState("");
-  const [headlines, setHeadlines] = useState<string[]>([]);
+const MAX_NUMBER_OF_MEASUREMENTS = 10;
+
+const App = () => {
+  const [measurements, setMeasurements] = useState<number[]>([]);
+
+  const getStats = useCallback(async () => {
+    const [ms, err] = await ping();
+    if (err || !ms) return;
+
+    setMeasurements(old => {
+      const updated = [...old];
+      if (old.length >= MAX_NUMBER_OF_MEASUREMENTS) updated.shift();
+      return [...updated, ms];
+    });
+  }, []);
 
   useEffect(() => {
-    chrome.tabs &&
-      chrome.tabs.query(
-        {
-          active: true,
-          currentWindow: true,
-        },
-        tabs => {
-          chrome.tabs.sendMessage(
-            tabs[0].id || 0,
-            { type: "GET_DOM" } as DOMMessage,
-            (response: DOMMessageResponse) => {
-              setTitle(response.title);
-              setHeadlines(response.headlines);
-            }
-          );
-        }
-      );
-  });
+    getStats();
+    const timeRef = setInterval(() => getStats(), 1000);
+    return () => clearInterval(timeRef);
+  }, [getStats]);
 
   return (
-    <div className="App">
-      <h1>SEO Extension built with React!</h1>
+    <Box background="#edf0f6" padding="0.5rem">
+      <Heading as="h1">InterCheck App Extension</Heading>
+      <pre>{JSON.stringify(measurements)}</pre>
 
-      <ul className="SEOForm">
-        <li className="SEOValidation">
-          <div className="SEOValidationField">
-            <span className="SEOValidationFieldTitle">Title</span>
-            <span
-              className={`SEOValidationFieldStatus ${
-                title.length < 30 || title.length > 65 ? "Error" : "Ok"
-              }`}
-            >
-              {title.length} Characters
-            </span>
-          </div>
-          <div className="SEOVAlidationFieldValue">{title}</div>
-        </li>
-
-        <li className="SEOValidation">
-          <div className="SEOValidationField">
-            <span className="SEOValidationFieldTitle">Main Heading</span>
-            <span className={`SEOValidationFieldStatus ${headlines.length !== 1 ? "Error" : "Ok"}`}>
-              {headlines.length}
-            </span>
-          </div>
-          <div className="SEOVAlidationFieldValue">
-            <ul>
-              {headlines.map((headline, index) => (
-                <li key={index}>{headline}</li>
-              ))}
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
+      <Stack
+        background="#fff"
+        boxShadow="0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%)"
+        margin={0}
+        padding="1rem"
+      >
+        <Box as="span" fontSize="1rem" color="#1a202c" fontWeight="bold">
+          Title
+        </Box>
+      </Stack>
+    </Box>
   );
-}
+};
 
 export default App;
