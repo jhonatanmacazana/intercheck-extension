@@ -5,6 +5,7 @@
   "scripts": {
     "start": "craco start",
     "build": "INLINE_RUNTIME_CHUNK=false craco build",
+    "build:w10": "set INLINE_RUNTIME_CHUNK=false craco build",
     "test": "craco test",
     "eject": "craco eject",
     "cp": "rm -rf /mnt/c/Users/user/Desktop/extension && cp -R build /mnt/c/Users/user/Desktop/extension"
