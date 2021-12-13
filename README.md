@@ -12,4 +12,4 @@ yarn install
 yarn build
 ```
 
-Finalmente, cargar la carpeta `build` hacia Chrome.
+Finalmente, cargar la carpeta `build` hacia Chrome, en `chrome://extensions`.
