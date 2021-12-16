@@ -6,11 +6,19 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
+const colors = {
+  text: {
+    light: "#123",
+    dark: "#321",
+  },
+};
+
 const styles: GlobalStyles = {
   global: props => ({
     "html, body": {
       backgroundColor: mode("backgroundLight", "backgroundDark")(props),
-      color: mode("text.light", "text.dark")(props),
+      // color: mode("text.light", "text.dark")(props),
+      color: "text.light",
 
       width: "600px",
       height: "400px",
@@ -27,6 +35,6 @@ const styles: GlobalStyles = {
   }),
 };
 
-const theme = extendTheme({ config, styles });
+const theme = extendTheme({ config, colors, styles });
 
 export default theme;

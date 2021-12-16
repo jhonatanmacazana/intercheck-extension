@@ -1,15 +1,20 @@
-import { Box, Heading, Stack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import { MAX_NUMBER_OF_MEASUREMENTS, PING_INTERVAL_IN_MS } from "#root/lib/constants";
 import ping from "#root/lib/ping";
 
-type Stat = {
-  timeWithoutConectivity: any;
-  lastInternetCut: number;
-  speedTest: any;
-  latencyStatistics: number;
-};
+import AdvancedPage from "./modules/measurements/AdvancedPage";
+import HomePage from "./modules/main/HomePage";
+import SimplePage from "./modules/measurements/SimplePage";
+
+// type Stat = {
+//   timeWithoutConectivity: any;
+//   lastInternetCut: number;
+//   speedTest: any;
+//   latencyStatistics: number;
+// };
 
 const App = () => {
   const [measurements, setMeasurements] = useState<number[]>([]);
@@ -33,19 +38,14 @@ const App = () => {
 
   return (
     <Box background="#edf0f6" padding="0.5rem">
-      <Heading as="h1">InterCheck App Extension</Heading>
       <pre>{JSON.stringify(measurements)}</pre>
 
-      <Stack
-        background="#fff"
-        boxShadow="0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%)"
-        margin={0}
-        padding="1rem"
-      >
-        <Box as="span" fontSize="1rem" color="#1a202c" fontWeight="bold">
-          Title
-        </Box>
-      </Stack>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/loading" element={<HomePage />} />
+        <Route path="/simple" element={<SimplePage />} />
+        <Route path="/advanced" element={<AdvancedPage />} />
+      </Routes>
     </Box>
   );
 };
