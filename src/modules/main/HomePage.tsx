@@ -1,31 +1,43 @@
-import { Box, Button, Heading, Stack } from "@chakra-ui/react";
+import { QuestionIcon, SettingsIcon } from "@chakra-ui/icons";
+import { Box, Button, HStack, Heading, IconButton, Stack } from "@chakra-ui/react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+
+import InfoModal from "./InfoModal";
+import SettingsModal from "./SettingsModal";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [isSettingsModalOpen, setisSettingsModalOpen] = useState(false);
+
   return (
     <Box>
-      <Heading as="h1">InterCheck App Extension</Heading>
+      <HStack align="center" justify="space-around">
+        <IconButton
+          aria-label="Información"
+          icon={<QuestionIcon w={6} h={6} />}
+          onClick={() => setIsInfoModalOpen(true)}
+        />
+        <Heading as="h1">InterCheck</Heading>
+        <IconButton
+          aria-label="Configuración"
+          icon={<SettingsIcon w={6} h={6} />}
+          onClick={() => setisSettingsModalOpen(true)}
+        />
+      </HStack>
 
-      <Stack
-        background="#fff"
-        boxShadow="0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%)"
-        margin={0}
-        padding="1rem"
-      >
-        <Box as="span" fontSize="1rem" color="#1a202c" fontWeight="bold">
-          Title
-        </Box>
-        <Button colorScheme="blue" onClick={() => navigate("/")}>
-          Home
+      <Stack margin={0} marginTop="2rem" flex={1} paddingY="1rem" align="center">
+        <Button colorScheme="blue" onClick={() => navigate("/simple")} w="12rem">
+          Test rápido
         </Button>
-        <Button colorScheme="blue" onClick={() => navigate("/simple")}>
-          Simple
-        </Button>
-        <Button colorScheme="blue" onClick={() => navigate("/advanced")}>
-          Avanzado
+        <Button colorScheme="blue" onClick={() => navigate("/advanced")} w="12rem">
+          Test avanzado
         </Button>
       </Stack>
+
+      <SettingsModal isOpen={isSettingsModalOpen} onClose={() => setisSettingsModalOpen(false)} />
+      <InfoModal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)} />
     </Box>
   );
 };

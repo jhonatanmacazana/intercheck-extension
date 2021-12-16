@@ -2,7 +2,12 @@ import { Box } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { MAX_NUMBER_OF_MEASUREMENTS, PING_INTERVAL_IN_MS } from "#root/lib/constants";
+import {
+  EXTENSION_HEIGHT,
+  EXTENSION_WIDTH,
+  MAX_NUMBER_OF_MEASUREMENTS,
+  PING_INTERVAL_IN_MS,
+} from "#root/lib/constants";
 import ping from "#root/lib/ping";
 
 import AdvancedPage from "./modules/measurements/AdvancedPage";
@@ -37,7 +42,7 @@ const App = () => {
   }, [getStats]);
 
   return (
-    <Box background="#edf0f6" padding="0.5rem">
+    <Box background="#fff" padding="0.5rem" h={EXTENSION_HEIGHT} w={EXTENSION_WIDTH}>
       <pre>{JSON.stringify(measurements)}</pre>
 
       <Routes>

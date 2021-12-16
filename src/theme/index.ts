@@ -1,6 +1,8 @@
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 import { GlobalStyles, mode } from "@chakra-ui/theme-tools";
 
+import { EXTENSION_HEIGHT, EXTENSION_WIDTH } from "#root/lib/constants";
+
 const config: ThemeConfig = {
   initialColorMode: "light",
   useSystemColorMode: false,
@@ -20,8 +22,8 @@ const styles: GlobalStyles = {
       // color: mode("text.light", "text.dark")(props),
       color: "text.light",
 
-      width: "600px",
-      height: "400px",
+      width: EXTENSION_WIDTH,
+      height: EXTENSION_HEIGHT,
       margin: 0,
       fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
       "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif`,
