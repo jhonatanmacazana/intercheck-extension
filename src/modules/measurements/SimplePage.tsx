@@ -10,7 +10,7 @@ type State = {
 };
 
 const initialState: State = {
-  isLoading: true,
+  isLoading: false,
   downloadSpeed: 0,
   uploadSpeed: 0,
   latency: 0,
