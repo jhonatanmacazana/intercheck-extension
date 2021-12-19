@@ -7,8 +7,9 @@ const CHROME_ALARM_PING_PERIOD_IN_SECONDS = 5;
 const CHROME_ALARM_UPDOWN = "updown";
 const CHROME_ALARM_UPDOWN_PERIOD_IN_SECONDS = 60;
 
-const PING_STORAGE_KEY = "ping";
-const UPDOWN_STORAGE_KEY = "updownInMbps";
+const PING_STORAGE_KEY = "pingInMs";
+// const UPDOWN_UPLOAD_STORAGE_KEY = "uploadInMbps";
+const UPDOWN_DOWNLOAD_STORAGE_KEY = "downloadInMbps";
 
 const pingAlarm = async () => {
   const [ms, err] = await pingWithFetch();
@@ -29,9 +30,9 @@ const updownAlarm = async () => {
     return;
   }
   const st = await chrome.storage.local.get(null);
-  const oldData = st[UPDOWN_STORAGE_KEY]; // array or undefined
+  const oldData = st[UPDOWN_DOWNLOAD_STORAGE_KEY]; // array or undefined
   await chrome.storage.local.set({
-    [UPDOWN_STORAGE_KEY]: oldData
+    [UPDOWN_DOWNLOAD_STORAGE_KEY]: oldData
       ? [...oldData, { [Date.now()]: data?.mbps }]
       : [{ [Date.now()]: data?.mbps }],
   });

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import ping from "#root/lib/ping";
+import { checkDownloadSpeed } from "#root/lib/updown";
 
 type State = {
   isLoading: boolean;
@@ -38,7 +39,12 @@ const SimplePage = () => {
     const [ms, err] = await ping();
     const latency = err || !ms ? 0 : ms;
 
-    setState(old => ({ ...old, isLoading: false, latency }));
+    const [data, err2] = await checkDownloadSpeed();
+    if (err2) {
+      console.log(err2);
+    }
+
+    setState(old => ({ ...old, isLoading: false, latency, downloadSpeed: Number(data?.mbps) }));
   };
 
   useEffect(() => {
