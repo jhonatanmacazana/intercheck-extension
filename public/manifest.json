@@ -6,13 +6,16 @@
   "version": "1.0",
   "action": {
     "default_popup": "index.html",
-    "default_title": "Open the popup"
+    "default_title": "Haz click aquí"
   },
   "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png",
-    "512": "logo512.png"
+    "16": "favicon-16x16.png",
+    "48": "android-chrome-192x192.png",
+    "128": "android-chrome-192x192.png",
+    "512": "android-chrome-512x512.png"
   },
-  "permissions": ["notifications"]
+  "background": {
+    "service_worker": "static/js/content.js"
+  },
+  "permissions": ["alarms", "notifications", "storage"]
 }

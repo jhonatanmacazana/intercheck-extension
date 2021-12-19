@@ -22,6 +22,13 @@ module.exports = {
         //   ].filter(Boolean),
         //   content: "./src/chromeServices/DOMEvaluator.ts",
         // },
+        entry: {
+          main: [
+            env === "development" && require.resolve("react-dev-utils/webpackHotDevClient"),
+            paths.appIndexJs,
+          ].filter(Boolean),
+          content: "./src/chromeServices/background.ts",
+        },
         output: {
           ...webpackConfig.output,
           filename: "static/js/[name].js",
