@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   CircularProgress,
   Flex,
   Heading,
@@ -70,7 +71,7 @@ const SimplePage = () => {
         Test rápido
       </Heading>
 
-      <Flex alignItems="center" justifyContent="space-around" w="100%">
+      <Flex alignItems="center" justifyContent="space-around" w="100%" fontSize="1.1rem">
         <Box>
           <HStack>
             <Text>Descarga Mbps</Text>
@@ -81,17 +82,19 @@ const SimplePage = () => {
           <HStack>
             <Text>Subida Mbps</Text>
           </HStack>
-          <Text>{state.downloadSpeed}</Text>
+          <Text>{state.uploadSpeed || "-"}</Text>
         </Box>
       </Flex>
 
-      <VStack>
+      <VStack fontSize="1.1rem">
         <SimpleGrid columns={2} gap={4}>
           <Text fontWeight="bold">Latencia</Text>
           <Text>{`: ${state.latency} ms`}</Text>
         </SimpleGrid>
-        <Button onClick={handleStartMeas}>Realizar otra medición</Button>
-        <Button onClick={() => navigate("/")}>Ir atrás</Button>
+        <ButtonGroup>
+          <Button onClick={() => navigate("/")}>Ir atrás</Button>
+          <Button onClick={handleStartMeas}>Realizar otra medición</Button>
+        </ButtonGroup>
       </VStack>
     </VStack>
   );

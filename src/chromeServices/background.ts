@@ -16,8 +16,8 @@ const pingAlarm = async () => {
   const oldData = st[PING_STORAGE_KEY]; // array or undefined
   await chrome.storage.local.set({
     [PING_STORAGE_KEY]: oldData
-      ? [...oldData, { [Date.now()]: latency }]
-      : [{ [Date.now()]: latency }],
+      ? [...oldData, { t: Date.now(), v: latency }]
+      : [{ t: Date.now(), v: latency }],
   });
 };
 
@@ -31,8 +31,8 @@ const updownAlarm = async () => {
   const oldData = st[UPDOWN_DOWNLOAD_STORAGE_KEY]; // array or undefined
   await chrome.storage.local.set({
     [UPDOWN_DOWNLOAD_STORAGE_KEY]: oldData
-      ? [...oldData, { [Date.now()]: data?.mbps }]
-      : [{ [Date.now()]: data?.mbps }],
+      ? [...oldData, { t: Date.now(), v: data?.mbps }]
+      : [{ t: Date.now(), v: data?.mbps }],
   });
 };
 
