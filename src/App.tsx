@@ -12,7 +12,6 @@ const App = () => {
     <Box background="#fff" padding="0.5rem" h={EXTENSION_HEIGHT} w={EXTENSION_WIDTH}>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/loading" element={<HomePage />} />
         <Route path="/simple" element={<SimplePage />} />
         <Route path="/advanced" element={<AdvancedPage />} />
       </Routes>

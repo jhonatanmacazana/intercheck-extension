@@ -1,15 +1,13 @@
+import {
+  CHROME_ALARM_PING,
+  CHROME_ALARM_PING_PERIOD_IN_SECONDS,
+  CHROME_ALARM_UPDOWN,
+  CHROME_ALARM_UPDOWN_PERIOD_IN_SECONDS,
+  PING_STORAGE_KEY,
+  UPDOWN_DOWNLOAD_STORAGE_KEY,
+} from "#root/lib/constants";
 import { pingWithFetch } from "#root/lib/ping";
 import { checkDownloadSpeed } from "#root/lib/updown";
-
-const CHROME_ALARM_PING = "ping";
-const CHROME_ALARM_PING_PERIOD_IN_SECONDS = 5;
-
-const CHROME_ALARM_UPDOWN = "updown";
-const CHROME_ALARM_UPDOWN_PERIOD_IN_SECONDS = 60;
-
-const PING_STORAGE_KEY = "pingInMs";
-// const UPDOWN_UPLOAD_STORAGE_KEY = "uploadInMbps";
-const UPDOWN_DOWNLOAD_STORAGE_KEY = "downloadInMbps";
 
 const pingAlarm = async () => {
   const [ms, err] = await pingWithFetch();
