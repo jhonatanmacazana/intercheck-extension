@@ -6,8 +6,8 @@ import {
 } from "#root/lib/constants";
 import { pingWithFetch } from "#root/lib/ping";
 import { checkDownloadSpeed } from "#root/lib/updown";
-import { PingStorage } from "#root/modules/storage/ping";
-import { UpdownStorage } from "#root/modules/storage/updown";
+import { PingStorage } from "#root/modules/extension/pingStorage";
+import { UpdownStorage } from "#root/modules/extension/updownStorage";
 
 const pingAlarm = async () => {
   const [ms, err] = await pingWithFetch();
