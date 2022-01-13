@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { EXTENSION_HEIGHT, EXTENSION_WIDTH } from "#root/lib/constants";
 
-import AdvancedPage from "./modules/measurements/AdvancedPage";
+import ChartsPage from "./modules/measurements/ChartsPage";
 import HomePage from "./modules/main/HomePage";
 import SimplePage from "./modules/measurements/SimplePage";
 
@@ -13,7 +13,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/simple" element={<SimplePage />} />
-        <Route path="/advanced" element={<AdvancedPage />} />
+        <Route path="/advanced" element={<ChartsPage />} />
       </Routes>
     </Box>
   );

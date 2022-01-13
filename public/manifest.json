@@ -6,7 +6,7 @@
   "version": "1.0",
   "action": {
     "default_popup": "index.html",
-    "default_title": "Haz click aquí"
+    "default_title": "Intercheck App. Haz click aquí"
   },
   "icons": {
     "16": "favicon-16x16.png",

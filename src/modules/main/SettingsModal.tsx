@@ -1,17 +1,8 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
+import { useState } from "react";
+
+import MyModal from "#root/components/MyModal";
+import NumberSliderInput from "#root/components/NumberSliderInput";
 
 type Props = {
   isOpen: boolean;
@@ -19,38 +10,46 @@ type Props = {
 };
 
 const SettingsModal = ({ isOpen, onClose }: Props) => {
+  const [pingRate, setPingRate] = useState(1);
+  const [updownRate, setUpdownRate] = useState(5);
+
+  const onSave = () => {
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Configuración</ModalHeader>
-        <ModalCloseButton />
+    <MyModal
+      isOpen={isOpen}
+      onClose={onClose}
+      onPrimaryButtonClick={onSave}
+      onSecondaryButtonClick={onClose}
+      primaryButtonText="Guardar"
+      secondaryButtonText="Cancelar"
+      title="Configuración"
+    >
+      <Heading as="h3" size="sm">
+        Medición continua
+      </Heading>
+      <Text>Periodo entre mediciones</Text>
 
-        <ModalBody>
-          <VStack>
-            <Box>
-              <Heading as="h3" size="lg">
-                Medición continua
-              </Heading>
-              <Text>Descripción del texto</Text>
-            </Box>
-            <Box>
-              <Heading as="h3" size="lg">
-                Lenguaje
-              </Heading>
-              <Text>Descripción del texto avanzado</Text>
-            </Box>
-          </VStack>
-        </ModalBody>
+      <Text mt={4}>Ping (estado de conexión) en minutos</Text>
+      <NumberSliderInput
+        max={30}
+        min={1}
+        onChange={value => setPingRate(Number(value))}
+        precision={1}
+        step={0.2}
+        value={pingRate}
+      />
 
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Cerrar
-          </Button>
-          <Button variant="ghost">oa</Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+      <Text mt={4}>Download y Upload (velocidad de descarga y carga) en minutos</Text>
+      <NumberSliderInput
+        max={60}
+        min={1}
+        onChange={value => setUpdownRate(Number(value))}
+        value={updownRate}
+      />
+    </MyModal>
   );
 };
 

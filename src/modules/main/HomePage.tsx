@@ -13,16 +13,16 @@ const HomePage = () => {
 
   return (
     <Box>
-      <HStack align="center" justify="space-around">
+      <HStack align="center" justify="space-around" mt="2rem">
         <IconButton
           aria-label="Información"
-          icon={<QuestionIcon w={6} h={6} />}
+          icon={<QuestionIcon w={7} h={7} />}
           onClick={() => setIsInfoModalOpen(true)}
         />
         <Heading as="h1">InterCheck</Heading>
         <IconButton
           aria-label="Configuración"
-          icon={<SettingsIcon w={6} h={6} />}
+          icon={<SettingsIcon w={7} h={7} />}
           onClick={() => setisSettingsModalOpen(true)}
         />
       </HStack>
@@ -32,7 +32,7 @@ const HomePage = () => {
           Test rápido
         </Button>
         <Button colorScheme="blue" onClick={() => navigate("/advanced")} w="12rem">
-          Test avanzado
+          Ver métricas
         </Button>
       </Stack>
 

@@ -1,17 +1,6 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
+
+import MyModal from "#root/components/MyModal";
 
 type Props = {
   isOpen: boolean;
@@ -20,37 +9,21 @@ type Props = {
 
 const InfoModal = ({ isOpen, onClose }: Props) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Información adicional</ModalHeader>
-        <ModalCloseButton />
-
-        <ModalBody>
-          <VStack>
-            <Box>
-              <Heading as="h3" size="lg">
-                Modo rápido
-              </Heading>
-              <Text>Descripción del texto</Text>
-            </Box>
-            <Box>
-              <Heading as="h3" size="lg">
-                Modo avanzado
-              </Heading>
-              <Text>Descripción del texto avanzado</Text>
-            </Box>
-          </VStack>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Cerrar
-          </Button>
-          <Button variant="ghost">oa</Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <MyModal
+      isOpen={isOpen}
+      onClose={onClose}
+      onSecondaryButtonClick={onClose}
+      secondaryButtonText="Cerrar"
+      title="Información adicional"
+      withPrimaryButton={false}
+    >
+      <Text>
+        Este proyecto permite monitorear el estado de conexión de internet del usuario de manera
+        periódica. Estos datos son almacenados en una memoria persistente interna no muy grande (5
+        Mbps) desde la cual se pueden generar gráficas para comparar la velocidad real de tu máquina
+        versus lo que tu proveedor de internet asegura proveerte.
+      </Text>
+    </MyModal>
   );
 };
 

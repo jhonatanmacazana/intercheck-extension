@@ -1,7 +1,6 @@
-export const MAX_NUMBER_OF_MEASUREMENTS = 10;
-export const PING_INTERVAL_IN_MS = 1000;
+export const NUMBER_OF_RECORDS_TO_BE_REMOVED_IF_MEMORY_IS_FULL = 1;
 
-export const EXTENSION_HEIGHT = "400px";
+export const EXTENSION_HEIGHT = "460px";
 export const EXTENSION_WIDTH = "600px";
 
 export const CHROME_ALARM_PING = "ping";

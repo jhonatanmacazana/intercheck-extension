@@ -10,7 +10,7 @@ type PayloadRecord = {
   v: number;
 };
 
-const AdvancedPage = () => {
+const ChartsPage = () => {
   const navigate = useNavigate();
   const [pingData, setPingData] = useState<PayloadRecord[]>([]);
   const [, setDownloadData] = useState<PayloadRecord[]>([]);
@@ -91,4 +91,4 @@ const AdvancedPage = () => {
   );
 };
 
-export default AdvancedPage;
+export default ChartsPage;
