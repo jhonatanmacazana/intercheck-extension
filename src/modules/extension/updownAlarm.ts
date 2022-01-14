@@ -8,5 +8,5 @@ export const updownAlarm = async () => {
     console.warn("checkDownloadSpeed err", err);
     return;
   }
-  await UpdownStorage.saveData({ t: Date.now(), v: Number(data?.mbps) });
+  await UpdownStorage.push({ t: Date.now(), v: Number(data?.mbps) });
 };

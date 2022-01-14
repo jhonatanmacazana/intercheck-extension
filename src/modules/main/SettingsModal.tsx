@@ -1,8 +1,13 @@
 import { Heading, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MyModal from "#root/components/MyModal";
 import NumberSliderInput from "#root/components/NumberSliderInput";
+import {
+  CHROME_ALARM_PING_DEFAULT_RATE_IN_MINUTES,
+  CHROME_ALARM_UPDOWN_DEFAULT_RATE_IN_MINUTES,
+} from "#root/lib/constants";
+import { SettingsStorage } from "#root/modules/extension/settingsStorage";
 
 type Props = {
   isOpen: boolean;
@@ -10,10 +15,20 @@ type Props = {
 };
 
 const SettingsModal = ({ isOpen, onClose }: Props) => {
-  const [pingRate, setPingRate] = useState(1);
-  const [updownRate, setUpdownRate] = useState(5);
+  const [pingRate, setPingRate] = useState(CHROME_ALARM_PING_DEFAULT_RATE_IN_MINUTES);
+  const [updownRate, setUpdownRate] = useState(CHROME_ALARM_UPDOWN_DEFAULT_RATE_IN_MINUTES);
 
-  const onSave = () => {
+  useEffect(() => {
+    (async () => {
+      const all = await SettingsStorage.getAll();
+      if (!all) return;
+      setPingRate(all.pingRate || CHROME_ALARM_PING_DEFAULT_RATE_IN_MINUTES);
+      setUpdownRate(all.updownRate || CHROME_ALARM_UPDOWN_DEFAULT_RATE_IN_MINUTES);
+    })();
+  }, []);
+
+  const onSave = async () => {
+    await SettingsStorage.setAll({ pingRate, updownRate });
     onClose();
   };
 

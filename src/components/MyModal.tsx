@@ -51,7 +51,7 @@ const MyModal = ({
             </Button>
           )}
           {withPrimaryButton && (
-            <Button colorScheme="blue" onClick={onPrimaryButtonClick} variant="outlined">
+            <Button colorScheme="blue" onClick={onPrimaryButtonClick} variant="outline">
               {primaryButtonText}
             </Button>
           )}

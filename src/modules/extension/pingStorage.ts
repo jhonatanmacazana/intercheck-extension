@@ -6,7 +6,7 @@ import {
 import { TimeRecord } from "./types";
 
 export class PingStorage {
-  static async getData() {
+  static async getAll() {
     try {
       const st = await chrome.storage.local.get(null);
       const oldData = st[PING_STORAGE_KEY]; // array or undefined
@@ -16,8 +16,8 @@ export class PingStorage {
     }
   }
 
-  static async saveData(rec: TimeRecord) {
-    const oldData: TimeRecord[] = (await this.getData()) || [];
+  static async push(rec: TimeRecord) {
+    const oldData: TimeRecord[] = (await this.getAll()) || [];
     try {
       await chrome.storage.local.set({
         [PING_STORAGE_KEY]: [...oldData, rec],
@@ -32,6 +32,14 @@ export class PingStorage {
           ],
         });
       }
+    }
+  }
+
+  static async set(recs: TimeRecord[]) {
+    try {
+      await chrome.storage.local.set({ [PING_STORAGE_KEY]: recs });
+    } catch (err: any) {
+      console.warn("error in ping setData", err);
     }
   }
 }
