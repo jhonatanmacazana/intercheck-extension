@@ -3,15 +3,9 @@ import {
   SETTINGS_PING_RATE_STORAGE_KEY,
   SETTINGS_UPDOWN_RATE_STORAGE_KEY,
 } from "#root/lib/constants";
-import { PingStorage } from "./pingStorage";
 
-export type PingValue = number | undefined;
-export type UpdownValue = number | undefined;
-
-export type Settings = {
-  [SETTINGS_PING_RATE_STORAGE_KEY]: PingValue;
-  [SETTINGS_UPDOWN_RATE_STORAGE_KEY]: UpdownValue;
-};
+import { DataStorage } from "./dataStorage";
+import { PingValue, Settings, UpdownValue } from "./types";
 
 export class SettingsStorage {
   static async getAll() {
@@ -54,8 +48,10 @@ export class SettingsStorage {
     } catch (err: any) {
       console.warn("error in ping saveData", err);
       if (err?.message === "QUOTA_BYTES quota exceeded") {
-        const oldPingData = (await PingStorage.getAll()) || [];
-        await PingStorage.set(oldPingData.slice(NUMBER_OF_RECORDS_TO_BE_REMOVED_IF_MEMORY_IS_FULL));
+        const oldPingData = (await DataStorage.getPingData()) || [];
+        await DataStorage.setPingData(
+          oldPingData.slice(NUMBER_OF_RECORDS_TO_BE_REMOVED_IF_MEMORY_IS_FULL)
+        );
         await chrome.storage.local.set(value);
       }
     }

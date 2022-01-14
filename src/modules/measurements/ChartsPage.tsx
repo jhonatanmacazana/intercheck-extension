@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, ButtonGroup, Divider, Heading, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { CartesianGrid, LineChart, Line, Tooltip, XAxis, YAxis } from "recharts";
 
-import { PING_STORAGE_KEY, UPDOWN_DOWNLOAD_STORAGE_KEY } from "#root/lib/constants";
+import { DataStorage } from "#root/modules/extension/dataStorage";
 import { TimeRecord } from "#root/modules/extension/types";
 import LoadingPage from "#root/components/LoadingPage";
+import { PING_STORAGE_KEY, UPDOWN_DOWNLOAD_STORAGE_KEY } from "#root/lib/constants";
 
 const ChartsPage = () => {
   const navigate = useNavigate();
@@ -15,18 +17,48 @@ const ChartsPage = () => {
   const [, setDownloadData] = useState<TimeRecord[]>([]);
   // const [downloadData, setDownloadData] = useState<PayloadRecord[]>([]);
 
-  const getData = async () => {
-    const st = await chrome.storage.local.get(null);
-    const pingRawData = st[PING_STORAGE_KEY];
-    setPingData(pingRawData);
-    const downloadRawData = st[UPDOWN_DOWNLOAD_STORAGE_KEY];
-    setDownloadData(downloadRawData);
+  const setupData = useCallback(async () => {
+    setIsLoading(true);
+    const data = await DataStorage.getAll();
+    if (!data) {
+      setIsLoading(false);
+      return;
+    }
+    setPingData(data.pingInMs!);
+    setDownloadData(data.downloadInMbps!);
     setIsLoading(false);
-    return st;
-  };
+  }, []);
 
+  // Load initial data
   useEffect(() => {
-    getData();
+    setupData();
+  }, []);
+
+  // Subscribe to live changes
+  useEffect(() => {
+    (async () => {
+      const listener: (
+        changes: { [key: string]: chrome.storage.StorageChange },
+        areaName: "sync" | "local" | "managed"
+      ) => void = (changes, areaName) => {
+        for (let [key, { newValue }] of Object.entries(changes)) {
+          if (key === PING_STORAGE_KEY && areaName === "local") {
+            setPingData(newValue);
+            // const difference = newValue.filter((x: any) => !oldValue.includes(x)) || [];
+            // setPingData(old => [...old, ...difference]);
+          }
+
+          if (key === UPDOWN_DOWNLOAD_STORAGE_KEY && areaName === "local") {
+            setDownloadData(newValue);
+            // const difference = newValue.filter((x: any) => !oldValue.includes(x)) || [];
+            // setDownloadData(old => [...old, ...difference]);
+          }
+        }
+      };
+
+      chrome.storage.onChanged.addListener(listener);
+      return () => chrome.storage.onChanged.removeListener(listener);
+    })();
   }, []);
 
   if (isLoading) {
@@ -83,7 +115,7 @@ const ChartsPage = () => {
         <ButtonGroup paddingBottom="2rem">
           <Button onClick={() => navigate("/")}>Ir atrás</Button>
           <Divider orientation="vertical" />
-          <Button colorScheme="blue" onClick={() => getData()}>
+          <Button colorScheme="blue" onClick={() => setupData()}>
             Refrescar
           </Button>
           <Button colorScheme="red" onClick={() => chrome.storage.local.clear()}>

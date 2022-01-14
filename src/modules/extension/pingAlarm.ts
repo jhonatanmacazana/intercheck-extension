@@ -1,9 +1,9 @@
 import { pingWithFetch } from "#root/lib/ping";
 
-import { PingStorage } from "./pingStorage";
+import { DataStorage } from "./dataStorage";
 
 export const pingAlarm = async () => {
   const [ms, err] = await pingWithFetch();
   const latency = err || !ms ? 0 : ms;
-  await PingStorage.push({ t: Date.now(), v: latency });
+  await DataStorage.pushPingRecord({ t: Date.now(), v: latency });
 };

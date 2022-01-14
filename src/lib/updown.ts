@@ -44,6 +44,7 @@ export const checkUploadSpeed = async (): Promise<
 
   const defaultData = generateTestData(fileSizeInBytes / 1000);
   const data = JSON.stringify({ defaultData });
+  console.log(data);
 
   try {
     const startTime = new Date().getTime();

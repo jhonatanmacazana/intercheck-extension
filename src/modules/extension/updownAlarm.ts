@@ -1,6 +1,6 @@
 import { checkDownloadSpeed } from "#root/lib/updown";
 
-import { UpdownStorage } from "./updownStorage";
+import { DataStorage } from "./dataStorage";
 
 export const updownAlarm = async () => {
   const [data, err] = await checkDownloadSpeed();
@@ -8,5 +8,5 @@ export const updownAlarm = async () => {
     console.warn("checkDownloadSpeed err", err);
     return;
   }
-  await UpdownStorage.push({ t: Date.now(), v: Number(data?.mbps) });
+  await DataStorage.pushDownloadRecord({ t: Date.now(), v: Number(data?.mbps) });
 };
