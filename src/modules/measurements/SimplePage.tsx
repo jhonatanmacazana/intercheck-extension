@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  CircularProgress,
   Flex,
   Heading,
   HStack,
@@ -15,6 +14,7 @@ import { useNavigate } from "react-router";
 
 import ping from "#root/lib/ping";
 import { checkDownloadSpeed } from "#root/lib/updown";
+import LoadingPage from "#root/components/LoadingPage";
 
 type State = {
   isLoading: boolean;
@@ -53,15 +53,7 @@ const SimplePage = () => {
   }, []);
 
   if (state.isLoading) {
-    return (
-      <VStack align="center" justify="space-around">
-        <Heading as="h1">InterCheck</Heading>
-        <Heading as="h2" size="md">
-          Test rápido
-        </Heading>
-        <CircularProgress isIndeterminate pt="4rem" size="8rem" />
-      </VStack>
-    );
+    return <LoadingPage />;
   }
 
   return (

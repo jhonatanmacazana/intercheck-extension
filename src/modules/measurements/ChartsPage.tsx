@@ -4,16 +4,15 @@ import { useNavigate } from "react-router";
 import { CartesianGrid, LineChart, Line, Tooltip, XAxis, YAxis } from "recharts";
 
 import { PING_STORAGE_KEY, UPDOWN_DOWNLOAD_STORAGE_KEY } from "#root/lib/constants";
-
-type PayloadRecord = {
-  t: number;
-  v: number;
-};
+import { TimeRecord } from "#root/modules/extension/types";
+import LoadingPage from "#root/components/LoadingPage";
 
 const ChartsPage = () => {
   const navigate = useNavigate();
-  const [pingData, setPingData] = useState<PayloadRecord[]>([]);
-  const [, setDownloadData] = useState<PayloadRecord[]>([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [pingData, setPingData] = useState<TimeRecord[]>([]);
+  const [, setDownloadData] = useState<TimeRecord[]>([]);
   // const [downloadData, setDownloadData] = useState<PayloadRecord[]>([]);
 
   const getData = async () => {
@@ -22,12 +21,17 @@ const ChartsPage = () => {
     setPingData(pingRawData);
     const downloadRawData = st[UPDOWN_DOWNLOAD_STORAGE_KEY];
     setDownloadData(downloadRawData);
+    setIsLoading(false);
     return st;
   };
 
   useEffect(() => {
     getData();
   }, []);
+
+  if (isLoading) {
+    return <LoadingPage subtitle="Medición avanzada" />;
+  }
 
   return (
     <VStack align="center" justify="space-around">
