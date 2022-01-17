@@ -4,12 +4,13 @@ Código fuente para la versión de Intercheck como extensión de chrome.
 
 ## Características
 
-- Velocidad máxima actual
-- Velocidad actual
-- Latencia (tiempo de respuesta)
-- Pérdida de paquetes
-- Variación de latencia
-- Indisponibildad
+- [x] Latencia (tiempo de respuesta)
+- [x] Velocidad de descarga
+- [ ] Velocidad de carga
+
+- [x] Visualización del histórico
+- [ ] Estadísticas por visualización (media, máx, min, etc)
+- [ ] Generación de reportes
 
 ## Alcance
 
